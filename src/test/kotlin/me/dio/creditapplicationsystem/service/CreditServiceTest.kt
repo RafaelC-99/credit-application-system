@@ -1,14 +1,17 @@
 package me.dio.creditapplicationsystem.service
 
+import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.verify
 import me.dio.creditapplicationsystem.entity.Address
 import me.dio.creditapplicationsystem.entity.Credit
 import me.dio.creditapplicationsystem.entity.Customer
 import me.dio.creditapplicationsystem.enumeration.Status
 import me.dio.creditapplicationsystem.repository.CreditRepository
 import me.dio.creditapplicationsystem.service.impl.CreditService
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.test.context.ActiveProfiles
@@ -24,7 +27,15 @@ class CreditServiceTest {
 
     @Test
     fun `should create credit`(){
-        
+        //given
+        val fakeCredit = buildCredit()
+        every { creditRepository.save(fakeCredit) } returns fakeCredit
+        //when
+        val actual = creditService.save(fakeCredit)
+        //then
+        Assertions.assertThat(actual).isNotNull
+        Assertions.assertThat(actual).isSameAs(fakeCredit)
+        verify (exactly = 1){ creditRepository.save(fakeCredit) }
     }
 
     private fun buildCredit(
