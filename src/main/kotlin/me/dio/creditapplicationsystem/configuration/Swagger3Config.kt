@@ -1,5 +1,6 @@
 package me.dio.creditapplicationsystem.configuration
 
+import org.springdoc.core.customizers.OperationCustomizer
 import org.springdoc.core.models.GroupedOpenApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -9,7 +10,7 @@ class Swagger3Config {
     @Bean
     fun publicApi(): GroupedOpenApi? {
         return GroupedOpenApi.builder()
-            .group("sptringcreditapplicationsystem-public")
+            .group("springcreditapplicationsystem-public")
             .pathsToMatch("/api/customers/**", "/api/credits/**")
             .build()
     }
